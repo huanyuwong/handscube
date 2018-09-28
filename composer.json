@@ -1,0 +1,21 @@
+{
+    "name": "huanyuwong/handscube.local",
+    "type": "project",
+    "description" : "Handscube framework",
+    "keywords": ["handscube"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "huanyuwong"
+        }
+    ],
+    "homepage": "https://github.com/huanyuwong/handscube",
+    "require": {},
+    "autoload":{
+    	"psr-4": {     
+            "App\\" : "app/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
