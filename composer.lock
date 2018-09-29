@@ -1,0 +1,54 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "0e81e3dc36f1521424651cb7e1ed892d",
+    "packages": [
+        {
+            "name": "huanyuwong/handscubeframework",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/huanyuwong/handscubeframework.git",
+                "reference": "b5eb71b2bd9debc5e062454960662c470a3148f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/huanyuwong/handscubeframework/zipball/b5eb71b2bd9debc5e062454960662c470a3148f4",
+                "reference": "b5eb71b2bd9debc5e062454960662c470a3148f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "@stable"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "Handscube\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Handscube kernel framework",
+            "keywords": [
+                "handscube"
+            ],
+            "time": "2018-09-27T04:21:02+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
