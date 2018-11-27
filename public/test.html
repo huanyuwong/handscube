@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="http://handscube.local:8081/user/3/opt/update" method="post">
+        <!-- <input type="hidden" name="_method" value="PUT"> -->
+        用户名:<input type="text" name="username" >
+        密码 <input type="password" name="password" >
+        <input type="submit" name="submit">
+    </form>
+    <button id="testAjax">Test Ajax</button>
+    
+</body>
+<script src="jquery.min.js"></script>
+<script>
+    $("#testAjax").click(function(){
+        $.ajax({
+           type:"PUT",
+           url:"http://handscube.local:8081/user/3/opt/update",
+           data:{a:"apple",b:"bananer"}, 
+           success:function($res){
+                alert($res.uri);
+                console.log($res);
+           },
+           fail:function($res){
+               console.log($res);
+           }
+        });
+    });
+</script>
+</html>

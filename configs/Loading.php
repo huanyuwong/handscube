@@ -1,6 +1,6 @@
 <?php
 
-namespace Config;
+namespace Configs;
 
 const LoadingConfig = [
     "loading" => [

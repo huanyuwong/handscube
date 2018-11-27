@@ -1,20 +1,10 @@
 <?php
 
-
 require_once __DIR__ . "/../boot/Boot.php";
 
-
-
-define("__APP_PATH__",__DIR__ . "/../app/");
-
-
-// exit();
+define("__APP_PATH__", __DIR__ . "/../app/");
 
 $app = Handscube\Handscube::run(__APP_PATH__);
-
-$r = $app->make("Handscube\\Dev\\TestController");
-print_r($r);
-$app->test();
-
-
-
+$request = $app->singleton(Handscube\Kernel\Request::class);
+$response = $app->handle($request);
+$app->send($response);

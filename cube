@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+use Handscube\Console\Kernel as Cube;
+
+require_once './boot/Boot.php';
+
+define("__APP_PATH__", realpath("./app/"));
+define("__APP_CONFIG_PATH__", __APP_PATH__ . '/configs');
+// require_once __DIR__ . '/functions.php';
+
+$app = Handscube\Handscube::run(__APP_PATH__);
+$cube = new Cube(__APP_PATH__, $app);
+$cube->run();
