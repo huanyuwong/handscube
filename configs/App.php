@@ -19,7 +19,7 @@ return [
         // "appGuard" =>
     ],
     "session_expire" => 5,
-    "session_driver" => 'mysql',
+    "session_driver" => '',
     "session_driver_table" => 'session',
     "open_cross_domain" => true,
     "domain_config" => [

@@ -16,12 +16,9 @@ class IndexController extends Controller
 
     }
 
-    public function user(Request $request, User $user, Option $option)
+    public function user(User $user, Option $option, Request $request)
     {
-        print_r($user->id);
-        echo "\n";
-        print_r($option->id);
-        exit();
+        return $this->response($user->id . '----' . $option->id);
         // $response = (new Response())->setStatusCode(Response::HTTP_NOT_FOUND);
     }
 

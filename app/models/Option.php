@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Handscube\Kernel\Model;
+use App\Kernel\Model;
 
 class Option extends Model
 {

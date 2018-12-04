@@ -40,11 +40,10 @@ class IndexGuard extends ControllerGuard
         //     'name' => 'access_secret',
         //     'rid' => mt_random(),
         // ];
-        $token = \Handscube\Kernel\CrossGate::signToken();
+        // $token = \Handscube\Kernel\CrossGate::signToken();
 
         // $data = base64_encode(\urlencode('_key_handscube&' . time() . '_key_'));
         // ff(base64_decode($data));
-        ff($token);
     }
 
     // public function handle(Request $request)

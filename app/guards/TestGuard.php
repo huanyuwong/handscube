@@ -2,7 +2,20 @@
 
 namespace App\Guards;
 
-class TestGuard
+use Handscube\Kernel\Guard;
+
+class TestGuard extends Guard
 {
     protected $testProperty;
+
+    // public function indexGuard()
+    // {
+
+    // }
+
+    public function testGuard()
+    {
+
+    }
+
 }
