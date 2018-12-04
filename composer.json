@@ -11,7 +11,7 @@
     ],
     "homepage": "https://github.com/huanyuwong/handscube",
     "require": {
-        "huanyuwong/handscubeframework": "^1.0"
+        "huanyuwong/handscubeframework": "^1.0.1"
     },
     "autoload":{
     	"psr-4": {     
