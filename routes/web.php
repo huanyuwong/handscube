@@ -3,11 +3,11 @@
 use Handscube\Kernel\Route;
 
 Route::get('/', 'index@welcome');
+Route::resource('post', 'post');
 
 Route::match(["get", "post"], "/testmatch", "index@match");
 
 Route::get("/admin/{user}/{option}", "admin.index@user")->name("admin");
-
 Route::prefix('/admin', function () {
     Route::get('/test/:id/:name', 'admin.index@test');
     Route::get('/connect', 'admin.index@connect');
