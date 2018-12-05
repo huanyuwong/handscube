@@ -126,7 +126,7 @@ Route::get('/user/{id}','user@show')
 现在我们在`app/controllers`创建一个`UserController`
 
 ```php
-<?php
+
 namespace App\Controllers;
 
 use App\User;
@@ -154,7 +154,7 @@ class UserController extends Controller
 同上的场景：
 
 ```php
-<?php
+
 namespace App\Controllers;
 
 use Handscube\Kernel\Request;
@@ -195,7 +195,6 @@ public function test(Request $request, $user, $post){
 如果我们想直接获取`id`值对应的模型，我们可以给它进行类型提示：
 
 ```php
-<?php
     
 namespace App\Controllers;
 
@@ -297,7 +296,7 @@ $this->back();
 你可以在控制器中通过依赖注入的方式获取HTTP请求的实例，要获取该实例，你应该在要访问的控制器方法中进行`Handsucbe\Kernel\Request`的类型提示，这样传入的实例会通过内核自动注入:
 
 ```php
-<?php
+
 namespace App\Controllers;
 
 use Handscube\Kernel\Request;
@@ -337,7 +336,7 @@ Handsucbe本来定义了匿名函数控制器用于接受路由参数或操作�
 使用IoC我们可以很方便的在控制器中获取请求参数:
 
 ```php
-<?php
+
 namespace App\Controllers;
 use Hansubce\Kernel\Request;
 
@@ -375,7 +374,7 @@ Route::put('post/{id}','post@update')
 在`PostController`控制器中，我们可以这样获取请求的`id`参数:
 
 ```php
-<?php
+
 namespace App\Controllers;
 
 class PostController extends Controller {
@@ -388,7 +387,7 @@ class PostController extends Controller {
 }
 ```
 
-如果不给`input`方法传参数，将获取所有来自前端出入的数据 [包括pathInfo的数据]:
+如果不给`input`方法传参数，将获取所有来自前端传入的数据 [包括pathInfo的数据]:
 
 ```php
 return $request->input();
@@ -461,7 +460,7 @@ public function testGetCookie(){
 Handscube设置了部分像Laravel一样的门面概念，Session就包含其中。因此我们可以使用门面来访问Session。
 
 ```php
-<?php
+
 use Handscube\Facades\Session;
 
 //Controller
@@ -501,7 +500,7 @@ Handscube内置了守卫概念，用以在减少用户配置的前提下保证�
 你可以在`app\kernel\App.php`中的`bindGuard`方法内绑定应用守卫：
 
 ```php
-<?php
+
 namespace App\Kernel;
 use App\Kernel\AppGuard;
 use Handscube\Kernel\Application;
@@ -519,7 +518,7 @@ class App extends Application
 守卫绑定后，我们就可以使用守卫了，以上示例的应用守卫在App\kernel空间下：
 
 ```php
-<?php
+
 namespace App\Kernel;
 use Handscube\Kernel\Guard;
 
@@ -554,7 +553,7 @@ class AppGuard extends Guard
 这样就在守卫中注册了两个检查站，每一个检查站都有一个`handle`方法，用于接受要检验的数据，我们假设在`OneStation`检查站用于检查传入的`api token`是否有效，我们可以在`OneStation`中这样定义：
 
 ```php
-<?php
+
 namespace App\Stations;
 use Handscube\Kernel\CrossGate;
 use Handscube\Kernel\Response;
@@ -585,7 +584,6 @@ class OneStation extends Station
 每一个控制器对应一个守卫，比如`IndexController`的守卫名为`IndexGuard`，Handscube默认将控制器守卫的目录放在了`app\guards`下，一个典型的控制器守卫形如以下：
 
 ```php
-<?php
 
 namespace App\Guards;
 
@@ -708,9 +706,8 @@ return [
 上例中，在`Components`选项下的`Register`选项值就是注册的组件，注册后的组件可以在控制器中通过`app`容器直接访问：
 
 ```php
-<?php
+
     //IndexController.php
-    
     public function user(){
     	//通过request组件获取值
     	return $this->app->request->input('user_id');
@@ -770,7 +767,6 @@ class UserStore extends Event
 Handscube在`app\suppliers`中提供了调度器供应商用以注册事件和监听器。在该目录下`ScheduleSupplier.php`这样注册：
 
 ```php
-<?php
 
 namespace App\Suppliers;
 
