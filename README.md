@@ -193,10 +193,11 @@ class UserController extends Controller
 namespace App\Controllers;
 
 use Handscube\Kernel\Request;
-//...
-public function show(Reqeust $request, $id){
+class IndexController {
+    public function show(Reqeust $request, $id){
     if($request->input){
         //逻辑代码
+        }
     }
 }
 ```
