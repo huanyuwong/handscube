@@ -255,11 +255,11 @@ class IndexController extends Controller
 
 
 
-### 显示绑定
+### 显式绑定
 
-有时候我们想固定一个模型不变，这时候我们可以使用显示绑定，使用显示绑定的方法有两种，一种是在`控制器`中的`model`方法中声明，另一种是在`控制器守卫`中声明`[后文将介绍]`。
+有时候我们想固定一个模型不变，这时候我们可以使用式绑定，使用显式绑定的方法有两种，一种是在`控制器`中的`model`方法中声明，另一种是在`控制器守卫`中声明`[后文将介绍]`。
 
-在控制器中显性绑定一个模型:
+在控制器中显式绑定一个模型:
 
 ```php
 class IndexController extends Controller
@@ -273,7 +273,7 @@ class IndexController extends Controller
     
     public function test( Request $request, User $user, Post $post)
     {
-        //显示绑定user后，无论传入id的值如何改变,这里的user模型将一直是id为1的user模型
+        //显式绑定user后，无论传入id的值如何改变,这里的user模型将一直是id为1的user模型
         return $this->response($user->id . '-' . $post->id);
     }
 ```
@@ -332,10 +332,8 @@ $this->redirect('https://baidu.com');
 $this->back();
 ```
 
-### 
 
 # 请求
-
 
 
 ## 注入请求
@@ -386,7 +384,7 @@ Handsucbe本来定义了匿名函数控制器用于接受路由参数或操作�
 
 
 
-##获取请求参数
+## 获取请求参数
 
 使用IoC我们可以很方便的在控制器中获取请求参数:
 
@@ -558,7 +556,7 @@ Handscube默认使用`file`方式作为session驱动，如果你想修改session
 >
 >
 
-#守卫和检查站
+# 守卫和检查站
 
 Handscube内置了守卫概念，用以在减少用户配置的前提下保证数据的过滤。
 
@@ -618,8 +616,8 @@ class AppGuard extends Guard
 
 ```php
  protected $register = [
-		OneStation::class,
-		TwoStation::class
+	OneStation::class,
+	TwoStation::class
     ];
 ```
 
@@ -672,28 +670,28 @@ class IndexGuard extends ControllerGuard
     * 注册一个或多个对该控制器所有方法有效的检查站[除了except指定的方法]
     */
     protected $register = [
-
+    "index" => SomeoneStation::class,
     ];
     
     /**
     * $register注册的检查站对该数组注册的方法无效
     */
     protected $except = [
-		'login'
+	'login'
     ];
 
     /**
     * $register属性注册的方法只对以下方法有效
     */
     protected $only = [
-		'user'
+	'user'
     ];
 
     /**
     * 给一个控制器方法具体指定一个检查站
     */
     protected $specified = [
-		"login" => ChangeIdStation::class,
+	"login" => ChangeIdStation::class,
     ];
 
     /**
@@ -724,7 +722,7 @@ class IndexGuard extends ControllerGuard
 
 
 
-###控制器守卫模型绑定
+### 控制器守卫模型绑定
 
 在控制器守卫中，你也可以定义一个model方法来绑定请求参数到模型，如在IndexGuard中:
 
@@ -799,7 +797,7 @@ return [
 
 
 
-##延迟加载组件
+## 延迟加载组件
 
 如果我们在应用中注册过多的组件，会将应用变得臃肿，影响性能。这时我们可以给应用注册一些异步组件，在配置文件`app\configs\App.php`的`components`选项中配置如下：
 
@@ -811,13 +809,13 @@ return [
 
 
 
-#事件
+# 事件
 
 有时候我们希望在昨晚一件事后触发一个事件，Handscube事件系统为我们提供了该项功能，在Hanscube中，一个事件触发后会被派发到`事件调度器`，调度器会根据各种情况调度不同的事件到正确的位置中。
 
 
 
-##新建事件
+## 新建事件
 
 我们可以在`app\events`下新建一个`UserStore`事件在用户存储成功后触发，因此我们需要事件接受一个`User`的ORM数据模型，像这样：
 
@@ -845,7 +843,7 @@ class UserStore extends Event
 
 
 
-##事件监听器
+## 事件监听器
 
 
 
@@ -899,7 +897,7 @@ Handscube也提供了动态注册事件的方法，只需要访问`Handscube\Ker
 Event::listen(
             '\Handscube\Kernel\Events\PostComplete',
             'App\Listeners\StoreEventSubscriber@onPostStore'
-           	 );
+           	);
 
 ```
 
@@ -932,7 +930,7 @@ class PostNotifination extends Listener
 
 
 
-##事件订阅者
+## 事件订阅者
 
 假如我们希望注册多个事件的多个监听器，我们可以使用Handscube的事件订阅者。
 
@@ -1096,7 +1094,7 @@ public function show($id){
 
 
 
-##查询构建器
+## 查询构建器
 
 有时候我们因各种原因不想使用ORM访问数据库，我们可以使用查询构建起。Handscube重写了查询构建器，其使用方法和Laravel相同。
 
@@ -1115,7 +1113,7 @@ public function show($id){
 
 
 
-##Redis操作
+## Redis操作
 
 Handscube的`redis`数据操作依赖了`predis`包，我们假设你已经安装了这个Composer包。
 
@@ -1165,7 +1163,7 @@ class User extends Model
 
 
 
-###使用模型动作策略
+### 使用模型动作策略
 
 要在控制中的逻辑代码内使用模型动作策略，须使用模型上的`can`方法，该方法会根据你定义的模型动作策略判断该用户是否有权限更新指定资源。
 
@@ -1187,7 +1185,7 @@ class UserController {
 
 
 
-###控制器方法权限
+### 控制器方法权限
 
 有时候你想设置某个用户是否有访问某个控制器方法的权限，比如你想设置只有登录用户才可以访问某个控制器方法，`Handscube`并没有像`Yii`那样专门为此定义了一系列的支持来操作，Handsubce建立之初就时想轻量级简单和高度自定义化，所以你完全可以使用自定义`控制器守卫`和`检查站`来达到同样的效果。
 
@@ -1442,7 +1440,7 @@ public function signToken(){
 
 # 说明
 
-> **Handscube只是一个在短暂时间内随意打造的用于仿照框架功能的小项目**，
+> **Handscube只是个人在短时间内随意打造的仿照框架的小项目**，
 >
 > **现阶段只可用于交流参考之用，不能用于生产环境**。
 

@@ -8,7 +8,7 @@ use Handscube\Kernel\Application;
 class App extends Application
 {
     //Rewrite app guard.
-    public function bindGuard()
+    public function bindGuard($guard = '')
     {
         return AppGuard::class;
     }
