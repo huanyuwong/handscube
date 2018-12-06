@@ -1,4 +1,6 @@
-## 安装
+# 安装
+
+
 
 使用composer安装。
 
@@ -8,11 +10,17 @@ Composer create-project huanyuanwong/handscube myProject
 
 > Handscube运行环境须>=php7.0
 
-## 创建.env文件
+
+
+# 配置.env文件
 
 如果没有.env文件，将自带的.env.example修改为.env文件，并配置里面的信息，比如配置数据库。
 
-## 使用
+
+
+# 使用
+
+
 
 使用Handscube自带的开发环境服务器，进入项目根目录运行如下命令:
 
@@ -30,7 +38,9 @@ php cube serve --p 8001 --c '/usr/local/etc/php.ini'
 
 > 如果使用自带服务器报数据库相关错误时，请检查相关php文件配置。
 
-### 路由
+
+
+## 路由
 
 Handscube的路由配置在根目录`routes/web.php`中。
 
@@ -50,7 +60,11 @@ Route::get('/', 'index@welcome')->name('welcome')
 
 这样在后续的操作中你可以使用`Route::route('welcome') `来访问它。
 
-#### 带参数的路由
+
+
+### 带参数的路由
+
+---
 
 你也可以为路由添加参数，就像这样:
 
@@ -82,7 +96,11 @@ Route::get('/admin/:user/:option','admin.index@user);
 $url = Route::route('admin','[pars1, pars2]')
 ```
 
-#### 路由前缀
+
+
+### 路由前缀
+
+---
 
 如果你要访问的多个路由都有同样的前缀，你可以使用`Route::prefix`:
 
@@ -94,7 +112,11 @@ Route::prefix('/admin', function () {
 });
 ```
 
-#### 资源路由
+
+
+### 资源路由
+
+---
 
 如果要使用RESTful风格的资源路由，可以像这样建立一个资源路由:
 
@@ -102,7 +124,11 @@ Route::prefix('/admin', function () {
 Route::resource('article', 'article');
 ```
 
-#### 其它路由使用示例
+
+
+### 其它路由使用示例
+
+---
 
 ```php
 //注册一个post请求的路由
@@ -113,7 +139,9 @@ Route::any('/connect', 'index@connect');
 Route::match(["get", "post"], "/testmatch", "index@match");
 ```
 
-### 控制器
+
+
+# 控制器
 
 Handscube的控制器默认在`app/controllers`下，`index`模块的控制器就放在`app/controllers`下，其它模块的控制器在相应的文件夹内，比如`admin`模块下`index`控制器在`app/controllers/admin/`目录中。
 
@@ -126,7 +154,7 @@ Route::get('/user/{id}','user@show')
 现在我们在`app/controllers`创建一个`UserController`
 
 ```php
-
+<?php
 namespace App\Controllers;
 
 use App\User;
@@ -147,14 +175,16 @@ class UserController extends Controller
 }
 ```
 
-#### 依赖注入（IoC）
+
+
+## 依赖注入（IoC）
 
 当我们访问控制器方法时，Handscube内核帮我们完成了依赖注入（或称控制反转）功能，这意味着只要我们给出参数提示，就可以很轻松访问到该参数的注入实例。
 
 同上的场景：
 
 ```php
-
+<?php
 namespace App\Controllers;
 
 use Handscube\Kernel\Request;
@@ -168,13 +198,17 @@ public function show(Reqeust $request, $id){
 
 在以上示例中，我们完成了`Reqeust`核心类的依赖注入，方便我们访问`request`类上的属性和方法，而这些过程对用户来说是透明的。
 
-#### 模型绑定
+
+
+## 模型绑定
 
 有时候我们想将直接将路由接受的相关参数直接转换为相应的模型，这在Handscube中也是可以轻松做到的。
 
 在Handscube中，模型绑定分为隐式绑定和显式绑定。
 
-##### 隐式绑定
+
+
+### 隐式绑定
 
 在隐式绑定中，如果路由接受的参数是需要转化成相应模型的时候，我们可以直接给出模型参数的提示，Handscube会自动帮我们完成相应的模型注入。
 
@@ -195,6 +229,7 @@ public function test(Request $request, $user, $post){
 如果我们想直接获取`id`值对应的模型，我们可以给它进行类型提示：
 
 ```php
+<?php
     
 namespace App\Controllers;
 
@@ -212,7 +247,9 @@ class IndexController extends Controller
     }
 ```
 
-##### 显示绑定
+
+
+### 显示绑定
 
 有时候我们想固定一个模型不变，这时候我们可以使用显示绑定，使用显示绑定的方法有两种，一种是在`控制器`中的`model`方法中声明，另一种是在`控制器守卫`中声明`[后文将介绍]`。
 
@@ -235,7 +272,9 @@ class IndexController extends Controller
     }
 ```
 
-#### 资源控制器
+
+
+## 资源控制器
 
 资源控制器是带有RESETful风格的控制器，使用该控制器须先定义资源路由:
 
@@ -271,7 +310,9 @@ php cube create:controller NormalController
 
 该命令在`app\controllers`下生成了一个名为`NormalController`的普通控制器。
 
-#### 重定向
+
+
+## 重定向
 
 有时候我们需要在控制器中重定向一个请求，可以这样使用：
 
@@ -285,18 +326,18 @@ $this->redirect('https://baidu.com');
 $this->back();
 ```
 
----
+### 
+
+# 请求
 
 
 
-### 请求
-
-#### 注入请求
+## 注入请求
 
 你可以在控制器中通过依赖注入的方式获取HTTP请求的实例，要获取该实例，你应该在要访问的控制器方法中进行`Handsucbe\Kernel\Request`的类型提示，这样传入的实例会通过内核自动注入:
 
 ```php
-
+<?php
 namespace App\Controllers;
 
 use Handscube\Kernel\Request;
@@ -309,7 +350,9 @@ class UserController extends Controller {
 }
 ```
 
-#### 路由参数
+
+
+## 路由参数
 
 如果控制器方法想获取路由参数的数据，比如你有这样一个路由：
 
@@ -327,16 +370,22 @@ public function show(Request $request, $id){
 }
 ```
 
-#### 匿名函数获取参数[已废弃]
+
+
+## 匿名函数获取参数
+
+（已摒弃）
 
 Handsucbe本来定义了匿名函数控制器用于接受路由参数或操作方法，但匿名函数和php语言风格格格不入，不像Javascript语言特性那样对闭包的支持那样完整，并且在php实际使用中用匿名函数来充当控制器本身不太现实，所以Handscube直接摒弃了这种功能。
 
-#### 获取请求参数
+
+
+##获取请求参数
 
 使用IoC我们可以很方便的在控制器中获取请求参数:
 
 ```php
-
+<?php
 namespace App\Controllers;
 use Hansubce\Kernel\Request;
 
@@ -374,7 +423,7 @@ Route::put('post/{id}','post@update')
 在`PostController`控制器中，我们可以这样获取请求的`id`参数:
 
 ```php
-
+<?php
 namespace App\Controllers;
 
 class PostController extends Controller {
@@ -387,7 +436,7 @@ class PostController extends Controller {
 }
 ```
 
-如果不给`input`方法传参数，将获取所有来自前端传入的数据 [包括pathInfo的数据]:
+如果不给`input`方法传参数，将获取所有来自前端出入的数据 [包括pathInfo的数据]:
 
 ```php
 return $request->input();
@@ -416,11 +465,22 @@ $request->except('id'); //获取除了id之外的其它所有数据
 $request->except('id','uid'); //获取除了id和uid之外的其它所有数据
 ```
 
----
+
+
+## 获取请求头
+
+你可以直接访问请求实例来获取请求头：
+
+```php
+ public function update(Request $request,$id){
+     	//打印请求头信息
+        return $request->header
+    }
+```
 
 
 
-### Cookie
+# Cookie
 
 在控制器中可以使用`Handscuce\Assistants\Cookie `类访问`cookie`
 
@@ -451,16 +511,14 @@ public function testGetCookie(){
 
 > Cookie的设置都是经过加密的，在访问Cookie时将自动解密，加密使用.env的APP_KEY作为密钥。
 
----
 
 
-
-### Session
+# Session
 
 Handscube设置了部分像Laravel一样的门面概念，Session就包含其中。因此我们可以使用门面来访问Session。
 
 ```php
-
+<?php
 use Handscube\Facades\Session;
 
 //Controller
@@ -477,7 +535,9 @@ Public function testSession(){
 
 获取所有`Session`的值可以使用`Session::all()`方法，当我们使用Session门面访问方法时，Handscube会自动注入相应的实例。这样我们就可以像访问静态方法一样访问普通方法了。
 
-#### Session驱动
+
+
+## Session驱动
 
 Handscube默认使用`file`方式作为session驱动，如果你想修改session的驱动方式，可以在`.env`或者在`app\configs\App.php`中进行配置。目前Handscube除了`file`方式外公支持两种驱动方式，一种是`redis`另一种是`mysql`，如果使用`mysql`作为session驱动的方式，应该建立类似如下的session表:
 
@@ -488,19 +548,23 @@ Handscube默认使用`file`方式作为session驱动，如果你想修改session
 | data   | text         | 数据       |
 
 > 你可以在配置文件中修改session_driver_table指定session驱动的表名。
+>
+>
 
-### 守卫和检查站
+#守卫和检查站
 
 Handscube内置了守卫概念，用以在减少用户配置的前提下保证数据的过滤。
 
-#### 应用守卫（全局守卫）
+
+
+## 应用守卫（全局守卫）
 
 应用守卫是整个应用的守卫，所有经过应用的数据都必须经过该守卫的过滤。
 
 你可以在`app\kernel\App.php`中的`bindGuard`方法内绑定应用守卫：
 
 ```php
-
+<?php
 namespace App\Kernel;
 use App\Kernel\AppGuard;
 use Handscube\Kernel\Application;
@@ -515,10 +579,10 @@ class App extends Application
 }
 ```
 
-守卫绑定后，我们就可以使用守卫了，以上示例的应用守卫在App\kernel空间下：
+守卫绑定后，我们就可以使用守卫了，以上示例的应用守卫在`App\kernel`空间下：
 
 ```php
-
+<?php
 namespace App\Kernel;
 use Handscube\Kernel\Guard;
 
@@ -535,7 +599,9 @@ class AppGuard extends Guard
 
 以上展示了一个应用守卫的结构，在`$register`属性中我们可以注册检查站。
 
-#### 检查站
+
+
+## 检查站
 
 检查站和守卫是紧密相连的，一个守卫可以包含多个检查站，你可以理解成一名安检人员带你通过多个安检设备保证安全后才通行的概念。
 
@@ -553,7 +619,7 @@ class AppGuard extends Guard
 这样就在守卫中注册了两个检查站，每一个检查站都有一个`handle`方法，用于接受要检验的数据，我们假设在`OneStation`检查站用于检查传入的`api token`是否有效，我们可以在`OneStation`中这样定义：
 
 ```php
-
+<?php
 namespace App\Stations;
 use Handscube\Kernel\CrossGate;
 use Handscube\Kernel\Response;
@@ -577,13 +643,16 @@ class OneStation extends Station
 
 > 在以上示例中我们定义了一个可以检验接口Token的检查站用于筛选请求是否合法。在实际使用中，我们完全可以注册多个检查站完成多项功能的检查。
 
-#### 控制器守卫
+
+
+##控制器守卫
 
 `控制器守卫`相比`应用守卫`有些不同，你可以完全不用进行任何所谓中间件的注册和文件配置来过滤数据，
 
 每一个控制器对应一个守卫，比如`IndexController`的守卫名为`IndexGuard`，Handscube默认将控制器守卫的目录放在了`app\guards`下，一个典型的控制器守卫形如以下：
 
 ```php
+<?php
 
 namespace App\Guards;
 
@@ -646,7 +715,9 @@ class IndexGuard extends ControllerGuard
 
 同样如果一个控制器没有控制器守卫，那么该控制器守卫将被忽略。
 
-##### 控制器守卫模型绑定
+
+
+###控制器守卫模型绑定
 
 在控制器守卫中，你也可以定义一个model方法来绑定请求参数到模型，如在IndexGuard中:
 
@@ -673,19 +744,21 @@ public function storeUser(User $user){
 }
 ```
 
-#### 注册控制器守卫位置
+
+
+### 注册控制器守卫位置
 
 1. Index模块的控制器守卫须注册在`app\guards`根目录中。
 
 2. 其它模块（比如`Admin`模块）的控制器守卫注册在相应模块中（此例在`app\guards\admin\`目录下）。
 
----
+
+
+# 组件
 
 
 
-### 组件
-
-#### 普通组件
+## 普通组件
 
 Hanscube将可以直接通过app访问的内置对象称为组件，注册组件在`app\configs\App.php`下：
 
@@ -706,8 +779,9 @@ return [
 上例中，在`Components`选项下的`Register`选项值就是注册的组件，注册后的组件可以在控制器中通过`app`容器直接访问：
 
 ```php
-
+<?php
     //IndexController.php
+    
     public function user(){
     	//通过request组件获取值
     	return $this->app->request->input('user_id');
@@ -716,7 +790,9 @@ return [
 
 在以上示例中可以看到，我们既可以通过依赖注入访问request数据，也可以通过组件式访问，这取决于个人喜好。
 
-#### 延迟加载组件
+
+
+##延迟加载组件
 
 如果我们在应用中注册过多的组件，会将应用变得臃肿，影响性能。这时我们可以给应用注册一些异步组件，在配置文件`app\configs\App.php`的`components`选项中配置如下：
 
@@ -726,15 +802,15 @@ return [
 
 该配置会注册一个名为DeferComponent的异步组件，只有某些需要的情况通过app容器访问的时候才会真正的进行加载。
 
----
 
 
-
-### 事件
+#事件
 
 有时候我们希望在昨晚一件事后触发一个事件，Handscube事件系统为我们提供了该项功能，在Hanscube中，一个事件触发后会被派发到`事件调度器`，调度器会根据各种情况调度不同的事件到正确的位置中。
 
-#### 新建事件
+
+
+##新建事件
 
 我们可以在`app\events`下新建一个`UserStore`事件在用户存储成功后触发，因此我们需要事件接受一个`User`的ORM数据模型，像这样：
 
@@ -760,13 +836,18 @@ class UserStore extends Event
 
 这样就新建了一个名为`UserStore`的事件。
 
-#### 事件监听器
 
-##### 注册事件和监听器
+
+##事件监听器
+
+
+
+### 注册事件和监听器
 
 Handscube在`app\suppliers`中提供了调度器供应商用以注册事件和监听器。在该目录下`ScheduleSupplier.php`这样注册：
 
 ```php
+<?php
 
 namespace App\Suppliers;
 
@@ -800,7 +881,9 @@ class ScheduleSupplier
 
 在以上示例的`$listeners`属性中注册了一个名为`PostCompolete`的事件和两个事件监听器`PostNotifination`和`AdminNotifination`。
 
-##### 动态注册事件
+
+
+## 动态注册事件
 
 Handscube也提供了动态注册事件的方法，只需要访问`Handscube\Kernel\Events`中的`listen`方法就可以进行注册了：
 
@@ -813,7 +896,9 @@ Event::listen(
 
 ```
 
-##### 编写事件监听器
+
+
+### 编写事件监听器
 
 事件监听器存放在`app\listeners`目录下，这里我们假设编写一个`PostNotifination`事件:
 
@@ -838,11 +923,15 @@ class PostNotifination extends Listener
 
 这样，相关事件触发后，会自动将事件本事注入到这个事件监听器中，我们就可以很方便的进行某些逻辑操作了。
 
-#### 事件订阅者
+
+
+##事件订阅者
 
 假如我们希望注册多个事件的多个监听器，我们可以使用Handscube的事件订阅者。
 
-##### 编写事件订阅者
+
+
+### 编写事件订阅者
 
 事件订阅者的`subscribe`方法可以绑定事件到相应的监听方法，你可以像这样新建一个事件订阅者。
 
@@ -893,7 +982,9 @@ class StoreEventSubscriber
 
 ```
 
-##### 注册事件订阅者
+
+
+### 注册事件订阅者
 
 要注册一个事件订阅者，需要在`app\suppliers\ScheduleSupplier.php`中进行：
 
@@ -911,7 +1002,7 @@ class ScheduleSupplier
 
 
 
-#### 事件触发
+### 事件触发
 
 假设我们在控制器完成了一个存储文章的动作，此时我们可以触发一个PostCompolete事件：
 
@@ -927,13 +1018,13 @@ public function store(Post $post){
 }
 ```
 
----
+
+
+# 数据库
 
 
 
-### 数据库
-
-####数据库配置
+## 数据库配置
 
 数据库的配置在`.env`和`app\configs\database.php`中，一个典型的数据库配置如下：
 
@@ -971,7 +1062,9 @@ return [
 
 Handscube目前只支持`Mysql`和`Redis`两种数据库。
 
-#### ORM
+
+
+## ORM
 
 要编写一个数据模型，可以`app\models`下，假如你有一个表叫`posts`，你可以创建一个Post模型:
 
@@ -997,7 +1090,9 @@ public function show($id){
 
 具体使用参照[Laravel Eloquent ORM](https://laravel.com/docs/5.7/eloquent).
 
-#### 查询构建器
+
+
+##查询构建器
 
 有时候我们因各种原因不想使用ORM访问数据库，我们可以使用查询构建起。Handscube重写了查询构建器，其使用方法和Laravel相同。
 
@@ -1014,7 +1109,9 @@ public function show($id){
 
 更多使用示例请参照[Laravel查询构建器](https://laravel.com/docs/5.7/queries)。
 
-#### Redis操作
+
+
+##Redis操作
 
 Handscube的`redis`数据操作依赖了`predis`包，我们假设你已经安装了这个Composer包。
 
@@ -1026,13 +1123,13 @@ Handscube的redis操作方法和predis一样，具体的使用可以访问predis
 $value = Redis::get('key');
 ```
 
----
+
+
+# 权限设置
 
 
 
-### 权限设置
-
-#### 模型动作策略
+## 模型动作策略
 
 很多时候我们需要对某个用户的权限进行一个限制，比如哪些文章是用户能更新的，哪些是能删除的。
 
@@ -1062,7 +1159,9 @@ class User extends Model
 
 在以上示例中，`User`模型新建了一条`Update`策略，该策略传入`User`模型和`Post`模型两个参数，用以判断该用户是否有权限更新某条文章资源。
 
-#### 使用模型动作策略
+
+
+###使用模型动作策略
 
 要在控制中的逻辑代码内使用模型动作策略，须使用模型上的`can`方法，该方法会根据你定义的模型动作策略判断该用户是否有权限更新指定资源。
 
@@ -1082,15 +1181,15 @@ class UserController {
 
 > 注意：如果没有定义模型的动作策略，Handscube将调用默认的策略进行权限判断，默认的策略就是用户id必须和资源id一致。
 
-#### 控制器方法权限
+
+
+###控制器方法权限
 
 有时候你想设置某个用户是否有访问某个控制器方法的权限，比如你想设置只有登录用户才可以访问某个控制器方法，`Handscube`并没有像`Yii`那样专门为此定义了一系列的支持来操作，Handsubce建立之初就时想轻量级简单和高度自定义化，所以你完全可以使用自定义`控制器守卫`和`检查站`来达到同样的效果。
 
----
 
 
-
-### 队列
+# 队列
 
 Handscube现阶段只实现了一个基本的队列demo，暂时不能完整的实现成熟队列功能。
 
@@ -1122,7 +1221,7 @@ public function testQueue(){
 
 
 
-### 响应
+# 响应
 
 要在控制器中返回一个响应很容易，你可以这样发出一个HTTP响应。
 
@@ -1159,7 +1258,7 @@ return (new Response())
 
 
 
-#### 设置响应头信息
+## 设置响应头信息
 
 设置头信息有两种方法，一种是在创建时设置：
 
@@ -1180,11 +1279,9 @@ return $response;
 $response->headers->set('Content-Type', 'text/plain');
 ```
 
----
 
 
-
-#### 以JSON格式返回
+## 以JSON格式返回
 
 JSON在数据交换中十分常用，如果我们希望将响应以Json数据返回，可以调用响应的`withJson`方法，
 
@@ -1212,7 +1309,7 @@ response($data)->send();
 
 
 
-#### 设置Cookie
+## 设置Cookie
 
 前面已经介绍了设置Cookie的一种方法，这里你也可以这样在响应附带Cookie
 
@@ -1228,7 +1325,7 @@ public function returnWithCookie(){
 
 
 
-#### 设置Http协商缓存
+## 设置Http协商缓存
 
 如果要设置HTTP缓存可以使用`setCache`方法：
 
@@ -1244,7 +1341,7 @@ $response->setCache(array(
 
 
 
-#### 重定向
+## 重定向
 
 该重定向和控制器的`$this->redirct()`类似。
 
@@ -1254,9 +1351,11 @@ $response->setCache(array(
 
 
 
-### 视图
+# 视图
 
-#### 展现一个视图
+
+
+## 展现一个视图
 
 要在控制中直接展现一个页面，可以实例化一个`Handscube\Kernel\View`对象：
 
@@ -1276,7 +1375,7 @@ class TestController extends Controller
 
 
 
-#### 为视图分配数据
+## 为视图分配数据
 
 如果我们要为某个视图提供数据，需要使用`Handscube\Kernel\View`对象的`with`方法:
 
@@ -1308,13 +1407,13 @@ public function showWelcomde()
 
 如果没有提供视图模块，将使用Home模块作为视图的默认模块。
 
----
+
+
+# 其它
 
 
 
-### 其它
-
-#### JWT
+## JWT
 
 Handscube提供了一个JWT签发器，用于前后端分离的情况，你可以像这样使用它们：
 
@@ -1335,13 +1434,13 @@ public function signToken(){
 }
 ```
 
----
 
 
+# 说明
 
-#### 说明
-
->！Handscube只是一个在短暂时间内随意打造的用于仿照框架功能的小项目，
+> **Handscube只是一个在短暂时间内随意打造的用于仿照框架功能的小项目**，
 >
->​    现阶段只可用于交流参考之用，不能用于生产环境。
+> **现阶段只可用于交流参考之用，不能用于生产环境**。
+
+---
 
