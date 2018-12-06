@@ -1,6 +1,6 @@
 # Handsubce
 
-​[![](https://img.shields.io/badge/release-0.0.1-brightgreen.svg)](https://github.com/huanyuwong/handscube/releases) [![](https://img.shields.io/badge/download-10.1M-blue.svg)](https://packagist.org/packages/huanyuwong/handscube) [![](https://img.shields.io/github/commit-status/badges/shields/master/5d4ab86b1b5ddfb3c4a70a70bd19932c52603b8c.svg)]() [![](https://img.shields.io/badge/style-plastic-green.svg?logo=appveyor&style=plastic)](https://packagist.org/packages/huanyuwong/handscube) [![](https://img.shields.io/badge/Licences-MIT-orange.svg)](https://packagist.org/packages/huanyuwong/handscube)
+[![](https://img.shields.io/badge/release-0.0.1-brightgreen.svg)](https://github.com/huanyuwong/handscube/releases) [![](https://img.shields.io/badge/download-10.1M-blue.svg)](https://packagist.org/packages/huanyuwong/handscube)  [![](https://img.shields.io/badge/Licences-MIT-orange.svg)](https://packagist.org/packages/huanyuwong/handscube)[![](https://img.shields.io/github/commit-status/badges/shields/master/5d4ab86b1b5ddfb3c4a70a70bd19932c52603b8c.svg)]()[![](https://img.shields.io/badge/style-plastic-green.svg?logo=appveyor&style=plastic)](https://packagist.org/packages/huanyuwong/handscube) 
 
 
 
@@ -89,9 +89,8 @@ Route::get('/admin/:user/:option','admin.index@user);
 假设这是你的`IndexController`，你可以这样访问这些请求参数:
 
 ```php
-	//IndexController.php
+//IndexController.php
     public function user($user, $option){
-    	//...
 		echo $user . '-' . $option;
 	}
 ```
@@ -176,7 +175,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-		return User::find($id);
+        return User::find($id);
     }
 }
 ```
@@ -491,7 +490,7 @@ $request->except('id','uid'); //获取除了id和uid之外的其它所有数据
 在控制器中可以使用`Handscuce\Assistants\Cookie `类访问`cookie`
 
 ```php
-\\IndexController.php
+//IndexController.php
     
 use Handscube\Assistants\Cookie;
 
@@ -526,16 +525,17 @@ Handscube设置了部分像Laravel一样的门面概念，Session就包含其中
 ```php
 <?php
 use Handscube\Facades\Session;
-
-//Controller
-Public function testSession(){
-    Session::get('key');//通过门面访问session
-    Session::set('key','value');//设置session的值
+class IndexController {
+    Public function testSession(){
+    //通过门面访问session
+    Session::get('key');
+    Session::set('key','value');
     //设置多个session的值
     Session::mset([ 
         'key1'=>'value1',
         'key2'=>'value2'
     ]);
+}
 }
 ```
 
@@ -598,7 +598,7 @@ class AppGuard extends Guard
     const cate = "app";
 
     protected $register = [
-		//在这里注册检查站
+	//在这里注册检查站
     ];
 }
 ```
@@ -692,7 +692,7 @@ class IndexGuard extends ControllerGuard
     * 给一个控制器方法具体指定一个检查站
     */
     protected $specified = [
-        // "connect" => ChangeIdStation::class,
+		"login" => ChangeIdStation::class,
     ];
 
     /**
@@ -894,11 +894,11 @@ class ScheduleSupplier
 Handscube也提供了动态注册事件的方法，只需要访问`Handscube\Kernel\Events`中的`listen`方法就可以进行注册了：
 
 ```php
-//或者使用Event::on()方法。
+/** 或者使用Event::on()方法 **/
 Event::listen(
             '\Handscube\Kernel\Events\PostComplete',
             'App\Listeners\StoreEventSubscriber@onPostStore'
-           );
+           	 );
 
 ```
 
@@ -957,28 +957,25 @@ class StoreEventSubscriber
 	//事件订阅方法
     public function onUserLogin($event)
     {
-        //访问$event数据的代码
-        //...
-        echo "> User Login Listener trigger.\n";
+        echo "> User Login Listener trigger.\n"; //访问$event数据的代码
     }
 	//事件订阅方法
     public function onPostStore($event)
     {
         echo ">> Post Store Listener trigger.\n";
     }
-	//订阅了两个事件PostComplete、UserStore和相关的监听方法
-    
+	
+    /** 订阅了两个事件PostComplete、UserStore和相关的监听方法 **/
     public function subscribe($event)
     {
         $event->on(
             '\Handscube\Kernel\Events\PostComplete',
-            //绑定到onPostStore方法
-            'App\Listeners\StoreEventSubscriber@onPostStore' 
+            'App\Listeners\StoreEventSubscriber@onPostStore' //绑定到onPostStore方法
         );
         $event->listen(
             UserStore::class,
             [
-                //绑定了多个监听方法
+                /** 绑定了多个监听方法 **/
                 'App\Listeners\StoreEventSubscriber@onUserLogin',
                 'App\Listeners\StoreEventSubscriber@onUserStore',
             ]
