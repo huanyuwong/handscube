@@ -1,4 +1,4 @@
-# Handsubce
+#<center>Handsubce</center>
 
 [![](https://img.shields.io/badge/release-0.0.1-brightgreen.svg)](https://github.com/huanyuwong/handscube/releases) [![](https://img.shields.io/badge/download-10.1M-blue.svg)](https://packagist.org/packages/huanyuwong/handscube)  [![](https://img.shields.io/badge/Licences-MIT-orange.svg)](https://packagist.org/packages/huanyuwong/handscube) [![](https://img.shields.io/github/commit-status/badges/shields/master/5d4ab86b1b5ddfb3c4a70a70bd19932c52603b8c.svg)]() [![](https://img.shields.io/badge/style-plastic-green.svg?logo=appveyor&style=plastic)](https://packagist.org/packages/huanyuwong/handscube) 
 
