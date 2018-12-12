@@ -69,7 +69,7 @@
         <div class="flex-center position-ref full-height">
                 <div class="top-right links">
                         <a href="#">首页</a>
-                        <a href="https://github.com/huanyuwong/handscube">Github</a>
+                        <a href="https://github.com/huanyuwong/handscube/blob/master/README.md">文档</a>
                 </div>
             <div class="content">
                 <div class="title m-b-md">
